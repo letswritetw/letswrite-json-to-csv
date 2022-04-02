@@ -1,5 +1,51 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write</title><link rel="canonical" href="https://www.letswrite.tw/json-to-csv/"/><meta property="og:url" content="https://letswritetw.github.io/letswrite-json-to-csv/"/><meta property="fb:app_id" content="911000986339138"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Let's Write"/><meta property="og:title" content="用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write"/><meta itemprop="name" content="用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write"/><meta name="description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/><meta property="og:description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/><meta itemprop="description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/><meta itemprop="image" content="https://letswritetw.github.io/letswrite-json-to-csv/fb.jpg"/><meta property="og:image" content="https://letswritetw.github.io/letswrite-json-to-csv/fb.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="用 JavaScript 將 JSON 轉為 CSV 檔下載"/><link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" media="screen"/><link rel="stylesheet" href="dist/style.min.css" media="screen"/><!-- Google Tag Manager--><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PGQ9WQT');</script></head><body><!-- Google Tag Manager (noscript)--><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><h1 class="text-center">用 JavaScript 將 JSON 轉為 CSV 檔下載</h1><h3 class="text-center">筆記文：<a href="https://www.letswrite.tw/json-to-csv/" target="_blank">Let's Write</a></h3><hr/><p>修改下方 textarea 的內容，點擊「下載」。</p><textarea id="textarea">[{ "項目1": "內容1-1", "項目2": "內容1-2", "項目3": "內容1-3", "項目4": 11 }, { "項目1": "內容2-1", "項目2": "內容2-2", "項目3": "內容2-3", "項目4": 12 }, { "項目1": "內容3-1", "項目2": "內容3-2", "項目3": "內容3-3", "項目4": 13 }]</textarea><div class="text-center"><button id="download" type="button">下載</button></div><hr/><script src="dist/main.min.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write</title>
+    <link rel="canonical" href="https://www.letswrite.tw/json-to-csv/"/>
+    <meta property="og:url" content="https://letswritetw.github.io/letswrite-json-to-csv/"/>
+    <meta property="fb:app_id" content="911000986339138"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Let's Write"/>
+    <meta property="og:title" content="用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write"/>
+    <meta itemprop="name" content="用 JavaScript 將 JSON 轉為 CSV 檔下載 - August - Let's Write"/>
+    <meta name="description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/>
+    <meta property="og:description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/>
+    <meta itemprop="description" content="之前一直以為，點擊按鈕後將表格轉成檔案下載，都是後端的事情，直到這幾天收到需求，問說前端有沒有可以做到後，才去研究這個部份。結果一查，還真的有耶，可以把從 API 取回的 JSON 檔，轉成 CSV 檔後下載。"/>
+    <meta itemprop="image" content="https://letswritetw.github.io/letswrite-json-to-csv/fb.jpg"/>
+    <meta property="og:image" content="https://letswritetw.github.io/letswrite-json-to-csv/fb.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="用 JavaScript 將 JSON 轉為 CSV 檔下載"/>
+    <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" media="screen"/>
+    <link rel="stylesheet" href="dist/style.min.css" media="screen"/>
+    <!-- Google Tag Manager-->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
+    </script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <h1 class="text-center">用 JavaScript 將 JSON 轉為 CSV 檔下載</h1>
+    <h3 class="text-center">筆記文：<a href="https://www.letswrite.tw/json-to-csv/" target="_blank">Let's Write</a></h3>
+    <hr/>
+    <p>修改下方 textarea 的內容，點擊「下載」。</p>
+    <textarea id="textarea">[{ "項目1": "內容1-1", "項目2": "內容1-2", "項目3": "內容1-3", "項目4": 11 }, { "項目1": "內容2-1", "項目2": "內容2-2", "項目3": "內容2-3", "項目4": 12 }, { "項目1": "內容3-1", "項目2": "內容3-2", "項目3": "內容3-3", "項目4": 13 }]</textarea>
+    <div class="text-center">
+      <button id="download" type="button">下載</button>
+    </div>
+    <hr/>
+    <script src="dist/main.min.js"></script>
+  </body>
+</html>
